@@ -3,7 +3,7 @@ package co.yasok.npdoc.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="users")
+@Table(name="users", uniqueConstraints = {@UniqueConstraint(name="UX_USER_EMAIL", columnNames = {"email"})})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
