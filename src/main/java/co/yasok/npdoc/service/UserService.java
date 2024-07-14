@@ -26,18 +26,18 @@ public class UserService {
         user.setPassword(password);
         user.setUserType(userType);
         User savedUser = userRepository.save(user);
-        return new UserDTO(savedUser.getId(), savedUser.getEmail(), savedUser.getUserType());
+        return new UserDTO(savedUser.getId(), savedUser.getFullName(), savedUser.getEmail(), savedUser.getUserType());
     }
 
     public Optional<UserDTO> loginUser(String email, String password) {
         Optional<User> user = userRepository.findByEmailAndPassword(email, password);
-        return user.map(u -> new UserDTO(u.getId(), u.getEmail(), u.getUserType()));
+        return user.map(u -> new UserDTO(u.getId(), u.getFullName(), u.getEmail(), u.getUserType()));
     }
 
     public List<UserDTO> getUsersByType(String userType) {
         List<User> users = userRepository.findByUserType(userType);
         return users.stream()
-                .map(user -> new UserDTO(user.getId(), user.getEmail(), user.getUserType()))
+                .map(user -> new UserDTO(user.getId(), user.getFullName(), user.getEmail(), user.getUserType()))
                 .collect(Collectors.toList());
     }
 }
