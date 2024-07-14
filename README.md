@@ -133,6 +133,10 @@ The API documentation is available at http://localhost:8080/swagger-ui.html once
 # License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-# Acknowledgments
-    Spring Boot
-    Swagger/OpenAPI
+## Acknowledgments
+
+- **[Spring Boot](https://spring.io/projects/spring-boot)**: For providing the framework that simplifies the creation of REST APIs.
+- **[Swagger/OpenAPI](https://swagger.io/)**: For providing tools to document and test the APIs.
+- **[Spring Data JPA](https://spring.io/projects/spring-data-jpa)**: For simplifying database access.
+- **[ChatGPT](chat.openai.com) and [Claude Chat](https://claude.ai/chat)**: For code assist.
+- **Contributors**: To all the contributors of this project.
