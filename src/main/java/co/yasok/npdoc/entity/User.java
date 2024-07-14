@@ -4,24 +4,33 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name="users", uniqueConstraints = {@UniqueConstraint(name="UX_USER_EMAIL", columnNames = {"email"})})
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String fullName;
+
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
     private String password;
-    private String userType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserType userType = UserType.PATIENT; // Default value
 
     public User() {
 
     }
 
-    public User(String fullName, String email, String password, String userType) {
+    public User(String fullName, String email, String password) {
         this.fullName = fullName;
         this.email = email;
         this.password = password;
-        this.userType = userType;
     }
 
     public Long getId() {
@@ -56,11 +65,11 @@ public class User {
         this.password = password;
     }
 
-    public String getUserType() {
+    public UserType getUserType() {
         return userType;
     }
 
-    public void setUserType(String userType) {
+    public void setUserType(UserType userType) {
         this.userType = userType;
     }
 
