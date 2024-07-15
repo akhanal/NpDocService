@@ -1,13 +1,16 @@
 import os
 import tkinter as tk
-from tkinter import filedialog, simpledialog, messagebox, scrolledtext
+from tkinter import filedialog, messagebox, scrolledtext
 
 def create_jumbo_text(folder_path, file_types, exclude_folders):
     jumbo_text = ""
 
     for root, dirs, files in os.walk(folder_path):
-        # Exclude specified folders
-        dirs[:] = [d for d in dirs if d not in exclude_folders]
+        # Compute relative path from the root folder
+        relative_root = os.path.relpath(root, folder_path)
+
+        # Exclude specified folders, hidden folders, and specific folder names
+        dirs[:] = [d for d in dirs if os.path.join(relative_root, d) not in exclude_folders and not d.startswith('.') and d not in ['node_modules', 'target']]
 
         for file in files:
             if any(file.endswith(ft) for ft in file_types):
@@ -27,8 +30,10 @@ def select_root_folder():
 
 def add_exclude_folder():
     folder_selected = filedialog.askdirectory()
-    if folder_selected:
-        exclude_folders_listbox.insert(tk.END, folder_selected)
+    root_path = root_folder_entry.get()
+    if folder_selected and root_path:
+        relative_path = os.path.relpath(folder_selected, root_path)
+        exclude_folders_listbox.insert(tk.END, relative_path)
 
 def generate_jumbo_text():
     folder_path = root_folder_entry.get()
